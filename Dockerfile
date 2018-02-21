@@ -9,7 +9,6 @@ RUN curl https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud
 
 COPY start.sh /start.sh
 COPY sshd_config /etc/ssh/sshd_config
-RUN ssh-keygen -A
 
 # Create jenkins user in docker group.
 RUN adduser -s /bin/sh -h /home/jenkins jenkins -D \

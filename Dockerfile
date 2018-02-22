@@ -1,14 +1,13 @@
 FROM alpine:latest
 LABEL maintainer "unicorn research Ltd"
 
+ARG googlesdk="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-185.0.0-linux-x86_64.tar.gz"
+
 RUN apk update \
   && apk add --no-cache git openssh curl python docker openjdk8-jre
 
 WORKDIR /tmp
-RUN curl https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-185.0.0-linux-x86_64.tar.gz -o google-cloud-sdk.tar.gz
-
-COPY start.sh /start.sh
-COPY sshd_config /etc/ssh/sshd_config
+RUN curl ${googlesdk} -o google-cloud-sdk.tar.gz
 
 # Create jenkins user in docker group.
 RUN adduser -s /bin/sh -h /home/jenkins jenkins -D \
@@ -25,5 +24,7 @@ RUN tar xzf /tmp/google-cloud-sdk.tar.gz \
   && CLOUDSDK_CORE_DISABLE_PROMPTS=1 /home/jenkins/google-cloud-sdk/bin/gcloud components update
 
 USER root
-WORKDIR /root
+COPY start.sh /start.sh
+COPY sshd_config /etc/ssh/sshd_config
+
 ENTRYPOINT [ "/start.sh" ]

@@ -21,7 +21,7 @@ USER jenkins
 WORKDIR /home/jenkins
 RUN tar xzf /tmp/google-cloud-sdk.tar.gz \
   && CLOUDSDK_CORE_DISABLE_PROMPTS=1 ./google-cloud-sdk/install.sh \
-  && CLOUDSDK_CORE_DISABLE_PROMPTS=1 /home/jenkins/google-cloud-sdk/bin/gcloud install kubectl \
+  && CLOUDSDK_CORE_DISABLE_PROMPTS=1 /home/jenkins/google-cloud-sdk/bin/gcloud components install kubectl \
   && CLOUDSDK_CORE_DISABLE_PROMPTS=1 /home/jenkins/google-cloud-sdk/bin/gcloud components update
 
 USER root

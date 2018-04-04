@@ -28,4 +28,7 @@ USER root
 COPY start.sh /start.sh
 COPY sshd_config /etc/ssh/sshd_config
 
+RUN apk update \
+  && apk add --no-cache bash
+
 ENTRYPOINT [ "/start.sh" ]

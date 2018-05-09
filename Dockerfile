@@ -4,7 +4,7 @@ LABEL maintainer "unicorn research Ltd"
 ARG googlesdk="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-185.0.0-linux-x86_64.tar.gz"
 
 RUN apk update \
-  && apk add --no-cache git openssh curl python docker openjdk8-jre
+  && apk add --no-cache git openssh curl python docker openjdk8-jre make bash
 
 WORKDIR /tmp
 RUN curl ${googlesdk} -o google-cloud-sdk.tar.gz
@@ -27,8 +27,5 @@ RUN tar xzf /tmp/google-cloud-sdk.tar.gz \
 USER root
 COPY start.sh /start.sh
 COPY sshd_config /etc/ssh/sshd_config
-
-RUN apk update \
-  && apk add --no-cache bash
 
 ENTRYPOINT [ "/start.sh" ]
